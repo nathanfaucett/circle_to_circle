@@ -9,7 +9,7 @@ module.exports = function circleToCircle(x1, y1, r1, x2, y2, r2) {
         r = r1 + r2,
         rsq = r * r,
         dsq = dx * dx + dy * dy,
-        contact, d, invD, invR, nx, ny, depth;
+        contact, d, invD, invR, nx, ny;
 
     if (dsq < rsq) {
         contact = Contact2.create();
@@ -25,12 +25,11 @@ module.exports = function circleToCircle(x1, y1, r1, x2, y2, r2) {
             ny = 1;
         }
 
-        depth = (r - d) * 0.5;
         invR = r !== 0 ? 1 / r : 0;
 
         vec2.set(contact.point, (x1 * r2 + x2 * r1) * invR, (y1 * r2 + y2 * r1) * invR);
         vec2.set(contact.normal, nx, ny);
-        contact.depth = depth;
+        contact.depth = (r - d) * 0.5;
 
         return contact;
     } else {
